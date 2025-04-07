@@ -4,10 +4,17 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "test:routes": "jest tests/unit/routes",
-    "test:ui": "jest tests/unit/ui",
+    "test:unit": "jest __tests__/__controllers__ __tests__/public",
+    "test:integration": "jest __tests__/__routes__",
+    "test:watch": "jest --watch",
     "start": "node server.js",
     "dev": "nodemon server.js"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "\\.(css)$": "identity-obj-proxy"
+    }
   },
   "keywords": [],
   "author": "",
@@ -20,12 +27,15 @@
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^4.0.1",
+    "@testing-library/jest-dom": "^6.6.3",
     "@types/jest": "^29.5.14",
     "@types/supertest": "^6.0.3",
     "express": "^5.1.0",
     "firebase-admin": "^11.0.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "jsdom": "^26.0.0",
     "nodemon": "^3.1.9",
     "supertest": "^7.1.0"
   }
