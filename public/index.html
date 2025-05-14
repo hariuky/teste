@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,13 +11,13 @@
     <div class="logo">GSMobile</div>
     <div class="nav-links">
       <a href="#phones">Celulares</a>
-      <a href="/admin.html" class="admin-link">Admin</a>
+      <a href="/login.html" id="login-link">Login</a>
+      <button id="logout-btn" style="display: none;">Logout</button>
     </div>
   </nav>
 
-  <!-- BOTÃO DE ABRIR CARRINHO AQUI -->
+  <!-- BOTÃO DE ABRIR CARRINHO -->
   <button id="toggle-cart-btn" class="cart-toggle-btn">🛒</button>
-  
 
   <!-- CONTAINER DO CARRINHO -->
   <div class="cart-container" id="cart-container">
@@ -45,6 +44,40 @@
     <p>&copy; 2025 GSMobile. Todos os direitos reservados.</p>
   </footer>
 
-  <script src="/index.js"></script>
+  <!-- Scripts Firebase + App -->
+  <script type="module" src="/index.js"></script>
+  <!-- BLOQUEAR BOTÃO DIREITO -->
+<script>
+  document.addEventListener('contextmenu', event => event.preventDefault());
+</script>
+
+<!-- BLOQUEAR TECLAS COMO F12, CTRL+SHIFT+I, CTRL+U, ETC -->
+<script>
+  document.addEventListener('keydown', function (e) {
+    if (
+      e.key === "F12" || 
+      (e.ctrlKey && e.shiftKey && e.key === "I") || 
+      (e.ctrlKey && e.shiftKey && e.key === "J") || 
+      (e.ctrlKey && e.key === "U") ||
+      (e.ctrlKey && e.shiftKey && e.key === "C")
+    ) {
+      e.preventDefault();
+    }
+  });
+</script>
+
+<!-- DETECTAR ABERTURA DO DEVTOOLS (EXPERIMENTAL) -->
+<script>
+  setInterval(function(){
+    const start = new Date();
+    debugger;
+    const end = new Date();
+    if (end - start > 100) {
+      alert('DevTools detectado! Feche para continuar.');
+      window.location.reload();
+    }
+  }, 1000);
+</script>
+
 </body>
 </html>

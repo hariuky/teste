@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - GSMobile</title>
     <link rel="stylesheet" href="admin.css">
-    
-    
 </head>
 </style>
 <body>
@@ -20,11 +18,7 @@
     </nav>
 
     <main class="admin-dashboard">
-        <div class="admin-sidebar">
-            <button class="tab-button active" onclick="showTab('products')">Products</button>
-            <button class="tab-button" onclick="showTab('users')">Users</button>
-        </div>
-
+       
         <div class="admin-content">
             <div id="products" class="tab-content active">
                 <div class="content-header">
@@ -58,46 +52,6 @@
                         </tr>
                     </thead>
                     <tbody id="productsTableBody">
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="users" class="tab-content">
-                <div class="content-header">
-                    <h2>Gerenciamento de usuarios</h2>
-                </div>
-
-                <!-- Formulário de usuários inline (sem modal) -->
-                <form id="userForm" onsubmit="handleUserSubmit(event)">
-                    <input type="hidden" id="userId" name="id">
-                    <input type="text" id="fullName" name="fullName" placeholder="Nome Completo" required>
-                    <input type="email" id="userEmail" name="email" placeholder="Email" required>
-                    <input type="tel" id="userPhone" name="phone" placeholder="Telefone" maxlength="11" pattern="\d{11}" required>
-                    <input type="text" id="userPosition" name="position" placeholder="Cargo" required>
-                    <div class="form-buttons">
-                        <button type="submit">Salvar Usuário</button>
-                        <button type="button" onclick="resetUserForm()">Cancelar</button>
-                    </div>
-                </form>
-
-                <table class="crud-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome Completo</th>
-                            <th>Email</th>
-                            <th>Telefone</th>
-                            <th>Cargo</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="usersTableBody">
-                        <div id="loading-users" style="display: none;">
-                            <p>Carregando usuários...</p>
-                          </div>
-                          
-                          <div id="users-error" class="error-message" style="display: none; color: red;">
-                          </div>
                     </tbody>
                 </table>
             </div>

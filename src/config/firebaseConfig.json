@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "loja-de-celulares",
+  "private_key_id": "d503eb0455cc04c18ad710bf12d92f3fd3d24904",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDT/lP2uuaZ0fxT\ngq2hQ92d5dF1gdzMqtuubsZ5f1MCJg6loQzDxluUgbEoJ6EqNzQttJnuAOY6DsSB\nlEX8zumgg5Qw4hCB1sWwmjaMcWIGkAjwVeo2eIEtg9LPo7egt+sI/0D9hECAaP2d\nf/KI/JAgZkrej5Kmz68gyNZId9FSqUpi7vkaEYXQliA1I9SxQb7lPLx/GZZE8b+g\nK+2smMnH7OPHeX/5mJJswoPCnSTzJS/kazWa/fqjQSA47u4TGYWBAbVIMhisiI7/\nwLIWxoTDZILeHxZP1Yo16L4AxHCWH2iDEIoY+gklBZy/2skrXSgVUlIFyo5FCRVp\nfLD6T3aXAgMBAAECggEAYLVQBmli018Y1dvya3PzQJnbwNhaKr/y8ZM1Va3A52UH\nH4XltdXiZ0/2ylOx0PlYA1W1Nv8QCAI+oMJMXzThHUmJK/elAiZBDvx6z/zVdBr3\nCPSYoPq+K05MuE5+cYIVZYhUVJKlfi7nK5d3xAg7k5w2oWsrwo9R3AnivzJxulwN\ns7AvgcWzDiMuQGeksL4m+ejsEoYhtUMJtpwnFujIco6KB3jxjjqiSnGXwLXD3Aik\nkSI8FZwAdAmS/1u2/D9aF0wEsknNlzJCZkmgEFWrvAKDWAykhxs8ORleHY7P5LWX\nNNx0ew59ZzexCzl8jHLjOAlAxaR5PIQdwgwsESXK2QKBgQDrynVj4X1OYHtPVDAO\n5SVMxXQDr3FnzkI9eofgRAKd4gowhn6VYDvFyb4gc2/CC4btqnJh5/5EFZB065pv\nimkW1sAFxHu+2m2LRekvG2zqmuZS2p95/ejT26+Cch04wRqDKCKWUoXBju0IN0KQ\n7DlYfN4bAns1e4RdCdVWgYBrLQKBgQDmKbm7s8lOlZlTtCT0xxg+cGCbmZB+t/7m\n+el/q0qX/+QDi+VNx5uyXZvPQc5ySzCdx/X9pj1bDUHo7+vy7W92xLbo0n5k+lw2\n87v4jGncukNDrW0PDeDvjHKO7LT1GSg+XGWJU9ehCy6Xvsz8NsDUHgdOoT0m7S3f\n6AhvylXzUwKBgQC8E5LNZ8heoyDYpwtqZib5dKpUYjXwGhrGFR2aqkT4EJwWFsGT\nft5OptwL4GgtfKpUmtd/9t/fCOBgEqnt/JZUjFlAgHhARNSJ+erFE3guLf436oC4\neuqjSqFVSJa8dXMjWPk1tH9SZCH3orRrCrG3PmqfWrxSbcKnv7c2uDdpxQKBgC0L\nWXgstWcVzA4foWPuWwZNQ/rv0OGb7N0TZ+k+grjAscUn6daRDB2aSFYFkPu5T2hx\nq+jaUgOx0oZd/hVq9neOBCYInAfzH3z5sn3wLP+vzF5AYKmjk7QODpV+KeQV6lRa\nDN0VdYvk/ldgVgm+RXq97bwrviYSIPpDFPOb67pVAoGBAK+Z+ZR1ZHg+qvGlli1D\nhXEsLu5eJfM1FPu3391sJj2bctuGQcyx6+bWHLu2C8XPwD1n6LZDD6vKsWRm29Om\n1z0aRdmQLgWomXCCACEYz3+V4jJkZMXrf8tbkDwkMBlxHUIkuU5KIwdASzJ3HG6A\nKBbQt7YgbrWMTpcWe34DCxOi\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@loja-de-celulares.iam.gserviceaccount.com",
+  "client_id": "103838378747009685997",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40loja-de-celulares.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
