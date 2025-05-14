@@ -7,7 +7,6 @@
   <title>GSMobile</title>
   <link rel="stylesheet" href="/style.css">
 </head>
-
 <body>
   <nav class="navbar">
     <div class="logo">GSMobile</div>
@@ -17,19 +16,25 @@
     </div>
   </nav>
 
+  <!-- BOTÃO DE ABRIR CARRINHO AQUI -->
+  <button id="toggle-cart-btn" class="cart-toggle-btn">🛒</button>
+  
+
+  <!-- CONTAINER DO CARRINHO -->
+  <div class="cart-container" id="cart-container">
+    <button class="close-cart-btn" id="close-cart-btn">X</button>
+    <h3>Carrinho de Compras</h3>
+    <div id="cart-items"></div>
+    <div class="cart-total">Total: R$ <span id="cart-total">0.00</span></div>
+    <button id="checkout-btn">Finalizar Compra</button>
+  </div>
+
   <header class="hero">
     <h1>Bem-vindo à GsMobile</h1>
     <p>Encontre o smartphone perfeito hoje mesmo</p>
   </header>
 
   <main>
-    <div class="cart-container">
-      <h3>Carrinho de Compras</h3>
-      <div id="cart-items"></div>
-      <div class="cart-total">Total: R$ <span id="cart-total">0.00</span></div>
-      <button id="checkout-btn">Finalizar Compra</button>
-    </div>
-
     <section id="phones" class="products">
       <h2>Telefones em Destaque</h2>
       <div class="product-grid" id="product-grid"></div>
