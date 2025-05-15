@@ -124,7 +124,7 @@ function deleteProduct(productId) {
             showNotification("Erro ao remover produto: " + error.message, "error");
         });
 }
-
+//
 // 🔹 Mostrar notificação
 function showNotification(message, type) {
     const notification = document.getElementById("notification");
