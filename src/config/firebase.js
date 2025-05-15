@@ -1,28 +1,26 @@
+require('dotenv').config();
+
 const admin = require("firebase-admin");
 const { initializeApp } = require("firebase/app");
 
-const serviceAccount = require("./firebaseConfig.json");
-
-// Inicializa o Admin SDK (backend)
 if (!admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    }),
   });
 }
 
 const db = admin.firestore();
 
-// Configuração do Client SDK (frontend)
 const firebaseConfig = {
-  apiKey: serviceAccount.api_key || process.env.FIREBASE_API_KEY,
-  authDomain: `${serviceAccount.project_id}.firebaseapp.com`,
-  projectId: serviceAccount.project_id
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: `${process.env.FIREBASE_PROJECT_ID}.firebaseapp.com`,
+  projectId: process.env.FIREBASE_PROJECT_ID,
 };
 
-// Inicializa o Firebase Client SDK
 const firebaseApp = initializeApp(firebaseConfig);
 
-module.exports = { 
-  db, 
-  admin
-};
+module.exports = { db, admin };
