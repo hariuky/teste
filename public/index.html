@@ -47,7 +47,37 @@
   <!-- Scripts Firebase + App -->
   <script type="module" src="/index.js"></script>
   <!-- BLOQUEAR BOTÃO DIREITO -->
+<script>
+  document.addEventListener('contextmenu', event => event.preventDefault());
+</script>
 
+<!-- BLOQUEAR TECLAS COMO F12, CTRL+SHIFT+I, CTRL+U, ETC -->
+<script>
+  document.addEventListener('keydown', function (e) {
+    if (
+      e.key === "F12" || 
+      (e.ctrlKey && e.shiftKey && e.key === "I") || 
+      (e.ctrlKey && e.shiftKey && e.key === "J") || 
+      (e.ctrlKey && e.key === "U") ||
+      (e.ctrlKey && e.shiftKey && e.key === "C")
+    ) {
+      e.preventDefault();
+    }
+  });
+</script>
+
+<!-- DETECTAR ABERTURA DO DEVTOOLS (EXPERIMENTAL) -->
+<script>
+  setInterval(function(){
+    const start = new Date();
+    debugger;
+    const end = new Date();
+    if (end - start > 100) {
+      alert('DevTools detectado! Feche para continuar.');
+      window.location.reload();
+    }
+  }, 1000);
+</script>
 
 </body>
 </html>
