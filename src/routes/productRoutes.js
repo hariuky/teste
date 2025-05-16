@@ -3,12 +3,14 @@ const router = express.Router();
 const admin = require("firebase-admin");
 const serviceAccount = require("../config/firebaseConfig.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
+// Inicializa o Firebase Admin apenas uma vez
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
 
 const db = admin.firestore();
-module.exports = db;
 
 // Listar produtos
 router.get("/", async (req, res) => {
@@ -21,6 +23,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Buscar produto por ID
 router.get("/:id", async (req, res) => {
   try {
     const doc = await db.collection("products").doc(req.params.id).get();
@@ -32,6 +35,7 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Erro ao buscar produto" });
   }
 });
+
 // Adicionar produto
 router.post("/", async (req, res) => {
   try {
@@ -58,7 +62,9 @@ router.delete("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const { name, description, price, stock, imageUrl } = req.body;
-    await db.collection("products").doc(req.params.id).update({ name, description, price, stock, imageUrl });
+    await db.collection("products").doc(req.params.id).update({
+      name, description, price, stock, imageUrl
+    });
     res.json({ message: "Produto atualizado com sucesso" });
   } catch (error) {
     res.status(500).json({ error: "Erro ao atualizar produto" });
