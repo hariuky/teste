@@ -1,13 +1,8 @@
-import { auth } from './firebase-config.js';
+import { auth, db, collection, getDocs } from './firebase-config.js';
 import {
   onAuthStateChanged,
   signOut
 } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
-
-// Define a base da API conforme ambiente
-const API_BASE_URL = window.location.hostname === "localhost"
-  ? "http://localhost:5000"
-  : "https://teste-blush-three.vercel.app/";  // Substitua pela URL real da sua API em produção
 
 let currentUser = null;
 let cart = [];
@@ -80,13 +75,13 @@ function setupEventListeners() {
   });
 }
 
-// Carrega os produtos da API
+// Carrega os produtos direto do Firestore
 async function loadProducts() {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/products`);
-    if (!response.ok) throw new Error("Erro ao buscar produtos");
+    const productsCol = collection(db, "products");
+    const snapshot = await getDocs(productsCol);
 
-    productsData = await response.json();
+    productsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     renderProducts(productsData);
   } catch (error) {
     console.error("Erro ao carregar produtos:", error);
@@ -163,7 +158,7 @@ function removeFromCart(productId) {
   if (product) {
     showNotification(`${product.name} removido do carrinho!`, 'error');
   }
-  
+
   cart = cart.filter(item => item.id !== productId);
   saveCartToStorage();
   renderCart();
@@ -172,7 +167,7 @@ function removeFromCart(productId) {
 // Função para mostrar notificação
 function showNotification(message, type = 'success') {
   let notification = document.getElementById('cart-notification');
-  
+
   if (!notification) {
     notification = document.createElement('div');
     notification.id = 'cart-notification';
@@ -180,7 +175,6 @@ function showNotification(message, type = 'success') {
     document.body.appendChild(notification);
   }
 
-  // Altera a cor baseada no tipo
   notification.style.backgroundColor = type === 'error' ? '#f44336' : '#4CAF50';
 
   notification.innerHTML = `
@@ -223,39 +217,47 @@ function loadCartFromStorage() {
   }
 }
 
-function finalizePurchase() {
+async function finalizePurchase() {
   if (cart.length === 0) {
     alert("Carrinho vazio");
     return;
   }
 
-  fetch(`${API_BASE_URL}/api/products/checkout`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ cart: cart })
-  })
-    .then(res => {
-      if (!res.ok) {
-        return res.text().then(text => { throw new Error(text) });
+  try {
+    const batch = writeBatch(db);
+
+    for (const item of cart) {
+      const productRef = doc(db, 'products', item.id);
+      const productSnap = await getDoc(productRef);
+
+      if (!productSnap.exists()) {
+        alert(`Produto com ID ${item.id} não encontrado`);
+        return;
       }
-      return res.json();
-    })
-    .then(data => {
-      showNotification("Pedido finalizado com sucesso!", 'success');
-      localStorage.removeItem("cart");
-      cart = [];
-      renderCart();
-      setTimeout(() => {
-        window.location.reload();
-      }, 850);
-    })
-    .catch(err => {
-      console.error("Erro ao finalizar pedido:", err);
-      showNotification("Erro ao finalizar pedido.", 'error');
-    });
+
+      const productData = productSnap.data();
+
+      if (productData.stock < item.quantity) {
+        alert(`Estoque insuficiente para ${productData.name}`);
+        return;
+      }
+
+      // Atualiza o estoque no batch
+      batch.update(productRef, { stock: productData.stock - item.quantity });
+    }
+
+    await batch.commit();
+
+    showNotification("Compra finalizada com sucesso!", 'success');
+    localStorage.removeItem("cart");
+    cart = [];
+    renderCart();
+
+  } catch (error) {
+    console.error("Erro ao finalizar compra:", error);
+    showNotification("Erro ao finalizar compra.", 'error');
+  }
 }
 
-// Adiciona as funções ao escopo global para que possam ser chamadas do HTML
+// Expõe funções para uso no HTML
 window.removeFromCart = removeFromCart;

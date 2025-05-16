@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js"; // ✅ ESSENCIAL
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD583M1OZeoNOyqxuwf9zSEFzElEwub3y0",
@@ -11,9 +11,8 @@ const firebaseConfig = {
   appId: "1:610593951973:web:7d00e519af59ad5611440c",
   measurementId: "G-7SJKRQEYWR"
 };
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app); // ✅ necessário para usar Firestore
+const db = getFirestore(app);
 
-export { auth, db, collection, getDocs }; // exporta funções para usar em outro script
+export { auth, db, collection, getDocs };
