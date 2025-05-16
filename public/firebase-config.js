@@ -6,7 +6,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyD583M1OZeoNOyqxuwf9zSEFzElEwub3y0",
   authDomain: "loja-de-celulares.firebaseapp.com",
   projectId: "loja-de-celulares",
-  storageBucket: "loja-de-celulares.firebasestorage.app",
+  storageBucket: "loja-de-celulares.appspot.com",
   messagingSenderId: "610593951973",
   appId: "1:610593951973:web:7d00e519af59ad5611440c",
   measurementId: "G-7SJKRQEYWR"
