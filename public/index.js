@@ -1,9 +1,13 @@
-// index.js atualizado com login obrigatório, logout e notificações
 import { auth } from './firebase-config.js';
 import {
   onAuthStateChanged,
   signOut
 } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
+
+// Define a base da API conforme ambiente
+const API_BASE_URL = window.location.hostname === "localhost"
+  ? "http://localhost:5000"
+  : "https://teste-blush-three.vercel.app/";  // Substitua pela URL real da sua API em produção
 
 let currentUser = null;
 let cart = [];
@@ -79,7 +83,7 @@ function setupEventListeners() {
 // Carrega os produtos da API
 async function loadProducts() {
   try {
-    const response = await fetch("http://localhost:5000/api/products");
+    const response = await fetch(`${API_BASE_URL}/api/products`);
     if (!response.ok) throw new Error("Erro ao buscar produtos");
 
     productsData = await response.json();
@@ -225,7 +229,7 @@ function finalizePurchase() {
     return;
   }
 
-  fetch("http://localhost:5000/api/products/checkout", {
+  fetch(`${API_BASE_URL}/api/products/checkout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
