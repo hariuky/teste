@@ -1,5 +1,10 @@
 import { auth, db, collection, getDocs } from './firebase-config.js';
 import {
+  doc,
+  getDoc,
+  writeBatch
+} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import {
   onAuthStateChanged,
   signOut
 } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
@@ -151,6 +156,7 @@ function addToCart(productId) {
 
   saveCartToStorage();
   renderCart();
+
 }
 
 function removeFromCart(productId) {
@@ -162,6 +168,7 @@ function removeFromCart(productId) {
   cart = cart.filter(item => item.id !== productId);
   saveCartToStorage();
   renderCart();
+
 }
 
 // Função para mostrar notificação
@@ -217,6 +224,7 @@ function loadCartFromStorage() {
   }
 }
 
+// 🔹 FINALIZAÇÃO DE COMPRA COM FIRESTORE
 async function finalizePurchase() {
   if (cart.length === 0) {
     alert("Carrinho vazio");
@@ -252,6 +260,10 @@ async function finalizePurchase() {
     localStorage.removeItem("cart");
     cart = [];
     renderCart();
+
+     setTimeout(() => {
+      window.location.reload();
+    }, 1000);
 
   } catch (error) {
     console.error("Erro ao finalizar compra:", error);
