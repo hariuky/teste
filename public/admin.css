@@ -111,7 +111,40 @@
     .notification.error {
         background-color: var(--danger-color);
     }
-      
+    /* Adicione isso ao final do arquivo admin.css */
+
+/* Estilos para as abas */
+.tab-link {
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.tab-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.tab-link.active {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Estilos específicos para a tabela de feedbacks */
+#feedbackTableBody tr td:nth-child(2) {
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+#feedbackTableBody tr td:nth-child(3) {
+    white-space: nowrap;
+}  
     @keyframes slideIn {
         from { transform: translateX(100%); }
         to { transform: translateX(0); }

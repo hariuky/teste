@@ -2,7 +2,9 @@ import { auth, db, collection, getDocs } from './firebase-config.js';
 import {
   doc,
   getDoc,
-  writeBatch
+  writeBatch,
+  addDoc,
+  collection as firestoreCollection
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 import {
   onAuthStateChanged,
@@ -26,18 +28,6 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// Logout
-window.addEventListener("DOMContentLoaded", () => {
-  const logoutBtn = document.getElementById("logout-btn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      signOut(auth).then(() => {
-        window.location.href = "/login.html";
-      });
-    });
-  }
-});
-
 // Quando o DOM estiver carregado
 window.addEventListener("DOMContentLoaded", async () => {
   await loadProducts();
@@ -47,6 +37,90 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 // Configura todos os event listeners
 function setupEventListeners() {
+  // Logout
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      signOut(auth).then(() => {
+        window.location.href = "/login.html";
+      });
+    });
+  }
+
+  
+  // Formulário de feedback
+  const feedbackForm = document.getElementById("feedback-form");
+
+  if (feedbackForm) {
+    feedbackForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const feedbackName = document.getElementById("feedback-name").value.trim();
+      const feedbackText = document.getElementById("feedback-text").value.trim();
+
+      if (!feedbackName || !feedbackText) {
+        alert("Por favor, preencha todos os campos antes de enviar.");
+        return;
+      }
+
+      try {
+        await addDoc(firestoreCollection(db, "feedback"), {
+          userId: currentUser ? currentUser.uid : null,
+          nome: feedbackName,
+          texto: feedbackText,
+          criadoEm: new Date()
+        });
+
+        alert("Feedback enviado com sucesso!");
+        document.getElementById("feedback-modal").style.display = "none";
+        feedbackForm.reset();
+      } catch (error) {
+        console.error("Erro ao enviar feedback:", error);
+        alert("Erro ao enviar feedback. Tente novamente.");
+      }
+    });
+  }
+
+  // Modal de Feedback
+  const feedbackBtn = document.getElementById("feedback-btn");
+  const feedbackModal = document.getElementById("feedback-modal");
+  const closeFeedback = document.getElementById("close-feedback");
+
+  if (feedbackBtn && feedbackModal && closeFeedback) {
+    feedbackBtn.addEventListener("click", () => {
+      feedbackModal.style.display = "block";
+    });
+
+    closeFeedback.addEventListener("click", () => {
+      feedbackModal.style.display = "none";
+    });
+
+    window.addEventListener("click", (event) => {
+      if (event.target === feedbackModal) {
+        feedbackModal.style.display = "none";
+      }
+    });
+  }
+
+  // Botões do carrinho
+  const toggleCartBtn = document.getElementById("toggle-cart-btn");
+  const closeCartBtn = document.getElementById("close-cart-btn");
+
+  toggleCartBtn?.addEventListener("click", () => {
+    document.getElementById("cart-container")?.classList.add("open");
+    toggleCartBtn.style.display = "none";
+  });
+
+  closeCartBtn?.addEventListener("click", () => {
+    document.getElementById("cart-container")?.classList.remove("open");
+    toggleCartBtn.style.display = "block";
+  });
+
+  const checkoutBtn = document.getElementById("checkout-btn");
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", finalizePurchase);
+  }
+
   const productGrid = document.getElementById("product-grid");
   if (productGrid) {
     productGrid.addEventListener('click', function(e) {
@@ -63,21 +137,6 @@ function setupEventListeners() {
       addToCart(productId);
     });
   }
-
-  const checkoutBtn = document.getElementById("checkout-btn");
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener("click", finalizePurchase);
-  }
-
-  document.getElementById("toggle-cart-btn")?.addEventListener("click", () => {
-    document.getElementById("cart-container")?.classList.add("open");
-    document.getElementById("toggle-cart-btn").style.display = "none";
-  });
-
-  document.getElementById("close-cart-btn")?.addEventListener("click", () => {
-    document.getElementById("cart-container")?.classList.remove("open");
-    document.getElementById("toggle-cart-btn").style.display = "block";
-  });
 }
 
 // Carrega os produtos direto do Firestore
@@ -156,7 +215,6 @@ function addToCart(productId) {
 
   saveCartToStorage();
   renderCart();
-
 }
 
 function removeFromCart(productId) {
@@ -168,10 +226,8 @@ function removeFromCart(productId) {
   cart = cart.filter(item => item.id !== productId);
   saveCartToStorage();
   renderCart();
-
 }
 
-// Função para mostrar notificação
 function showNotification(message, type = 'success') {
   let notification = document.getElementById('cart-notification');
 
@@ -224,7 +280,6 @@ function loadCartFromStorage() {
   }
 }
 
-// 🔹 FINALIZAÇÃO DE COMPRA COM FIRESTORE
 async function finalizePurchase() {
   if (cart.length === 0) {
     alert("Carrinho vazio");
@@ -250,7 +305,6 @@ async function finalizePurchase() {
         return;
       }
 
-      // Atualiza o estoque no batch
       batch.update(productRef, { stock: productData.stock - item.quantity });
     }
 
@@ -261,15 +315,13 @@ async function finalizePurchase() {
     cart = [];
     renderCart();
 
-     setTimeout(() => {
+    setTimeout(() => {
       window.location.reload();
     }, 1000);
-
   } catch (error) {
     console.error("Erro ao finalizar compra:", error);
     showNotification("Erro ao finalizar compra.", 'error');
   }
 }
 
-// Expõe funções para uso no HTML
 window.removeFromCart = removeFromCart;

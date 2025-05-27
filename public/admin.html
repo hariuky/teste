@@ -6,7 +6,6 @@
     <title>Admin Dashboard - GSMobile</title>
     <link rel="stylesheet" href="admin.css">
 </head>
-</style>
 <body>
     <div id="notification" class="notification" style="display: none;"></div>
 
@@ -14,49 +13,69 @@
         <div class="logo">GSMobile Admin</div>
         <div class="nav-links">
             <a href="/">Vitrine</a>
+            <a href="#" class="tab-link" data-tab="products">Produtos</a>
+            <a href="#" class="tab-link" data-tab="feedback">Feedbacks</a>
         </div>
     </nav>
 
     <main class="admin-dashboard">
-       
         <div class="admin-content">
+            <!-- Seção de Produtos -->
             <div id="products" class="tab-content active">
                 <div class="content-header">
                     <h2>Gerenciamento de produtos</h2>
                 </div>
 
-                <!-- Formulário de produtos inline (sem modal) -->
+                <!-- Formulário de produtos -->
                 <form id="productForm">
-                  <input type="hidden" id="productId" name="id">
-                  <input type="text" id="productName" name="name" placeholder="Product Name" required>
-                  <input type="text" id="productDescription" name="description" placeholder="Description" required>
-                  <input type="number" id="productPrice" name="price" placeholder="Price" required min="50">
-                  <input type="number" id="productStock" name="stock" placeholder="Stock" required min="0">
-                  <input type="url" id="productImageUrl" name="imageUrl" placeholder="Image URL" required>
-                  <div class="form-buttons">
-                      <button type="submit">Salvar produto</button>
-                      <button type="button" onclick="resetProductForm()">Cancelar</button>
-                  </div>
-              </form>
-              
+                    <input type="hidden" id="productId" name="id">
+                    <input type="text" id="productName" name="name" placeholder="Nome do Produto" required>
+                    <input type="text" id="productDescription" name="description" placeholder="Descrição" required>
+                    <input type="number" id="productPrice" name="price" placeholder="Preço" required min="50">
+                    <input type="number" id="productStock" name="stock" placeholder="Estoque" required min="0">
+                    <input type="url" id="productImageUrl" name="imageUrl" placeholder="URL da Imagem" required>
+                    <div class="form-buttons">
+                        <button type="submit">Salvar produto</button>
+                        <button type="button" onclick="resetProductForm()">Cancelar</button>
+                    </div>
+                </form>
 
                 <table class="crud-table">
                     <thead>
                         <tr>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th>Ação</th>
+                            <th>Imagem</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Preço</th>
+                            <th>Estoque</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody id="productsTableBody">
                     </tbody>
                 </table>
             </div>
+
+            <!-- Seção de Feedbacks -->
+            <div id="feedback" class="tab-content">
+                <div class="content-header">
+                    <h2>Feedbacks dos Clientes</h2>
+                </div>
+
+                <table class="crud-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Feedback</th>
+                            <th>Data/Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feedbackTableBody">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
     <script type="module" src="/admin.js"></script>
-  </body>
+</body>
 </html>

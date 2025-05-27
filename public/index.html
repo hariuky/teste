@@ -39,6 +39,23 @@
       <div class="product-grid" id="product-grid"></div>
     </section>
   </main>
+  
+  <!-- Botão de Feedback -->
+  <button id="feedback-btn" class="feedback-button">💬 Feedback</button>
+
+  <!-- Modal de Feedback -->
+  <div id="feedback-modal" class="modal">
+    <div class="modal-content">
+      <span id="close-feedback" class="close">&times;</span>
+      <h2>Envie seu Feedback</h2>
+      <form id="feedback-form">
+  <input type="text" id="feedback-name" placeholder="Seu nome" required />
+  <textarea id="feedback-text" placeholder="Escreva seu feedback..." required></textarea>
+  <button type="submit">Enviar</button>
+</form>
+
+    </div>
+  </div>
 
   <footer>
     <p>&copy; 2025 GSMobile. Todos os direitos reservados.</p>
@@ -47,5 +64,30 @@
   <!-- Scripts Firebase + App -->
   <script type="module" src="/index.js"></script>
 
+  <!-- Script extra para abrir/fechar o modal de feedback -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const feedbackBtn = document.getElementById("feedback-btn");
+      const feedbackModal = document.getElementById("feedback-modal");
+      const closeFeedback = document.getElementById("close-feedback");
+
+      // Abrir o modal
+      feedbackBtn.addEventListener("click", () => {
+        feedbackModal.style.display = "block";
+      });
+
+      // Fechar o modal ao clicar no "X"
+      closeFeedback.addEventListener("click", () => {
+        feedbackModal.style.display = "none";
+      });
+
+      // Fechar o modal ao clicar fora do conteúdo
+      window.addEventListener("click", (event) => {
+        if (event.target === feedbackModal) {
+          feedbackModal.style.display = "none";
+        }
+      });
+    });
+  </script>
 </body>
 </html>

@@ -54,6 +54,80 @@ async function loadProducts() {
     showNotification("Erro ao carregar produtos: " + error.message, "error");
   }
 }
+// Adicione estas funções ao arquivo admin.js
+
+// 🔹 Carregar Feedbacks
+async function loadFeedbacks() {
+    try {
+        const feedbackCol = collection(db, "feedback");
+        const feedbackSnapshot = await getDocs(feedbackCol);
+        const feedbacks = feedbackSnapshot.docs.map(doc => ({ 
+            id: doc.id, 
+            ...doc.data(),
+            formattedDate: formatDate(doc.data().criadoEm?.toDate())
+        }));
+
+        const tableBody = document.getElementById("feedbackTableBody");
+        tableBody.innerHTML = "";
+
+        feedbacks.forEach(feedback => {
+            const row = `<tr>
+                <td>${feedback.nome || 'Anônimo'}</td>
+                <td>${feedback.texto}</td>
+                <td>${feedback.formattedDate || 'Data não disponível'}</td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+    } catch (error) {
+        console.error("Erro ao carregar feedbacks:", error);
+        showNotification("Erro ao carregar feedbacks: " + error.message, "error");
+    }
+}
+
+// 🔹 Formatar Data
+function formatDate(date) {
+    if (!date) return '';
+    
+    return new Intl.DateTimeFormat('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    }).format(date);
+}
+
+// 🔹 Alternar entre abas
+function setupTabs() {
+    document.querySelectorAll('.tab-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Remove a classe active de todos os links e conteúdos
+            document.querySelectorAll('.tab-link').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            
+            // Adiciona a classe active ao link clicado
+            link.classList.add('active');
+            
+            // Mostra o conteúdo correspondente
+            const tabId = link.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+            
+            // Carrega os dados da aba se necessário
+            if (tabId === 'feedback') {
+                loadFeedbacks();
+            }
+        });
+    });
+}
+
+// Atualize a função DOMContentLoaded para incluir as novas configurações
+document.addEventListener("DOMContentLoaded", () => {
+    loadProducts();
+    setupEventListeners();
+    setupTabs();
+});
 
 // 🔹 Salvar Produto (novo ou existente)
 async function saveProduct() {
